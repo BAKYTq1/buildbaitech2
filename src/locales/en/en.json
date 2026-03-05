@@ -49,7 +49,7 @@
       "weekend": "Sat: 10:00–15:30, Sun — closed"
     },
     "address": {
-      "street": "Bishkek, 7 April St., 4a",
+      "street": "Bishkek, Kok Jar 51",
       "country": "720065, Kyrgyzstan"
     },
     "information": {
@@ -64,6 +64,7 @@
     },
     "client": {
       "title": "Customer",
+      "title2": "Payment",
       "account": "My Account",
       "orderHistory": "Order History",
       "returns": "Returns"
@@ -425,6 +426,8 @@
     }
   },
    "courseDetails": {
+    "home": "Home",
+    "courses": "Courses",
     "title": "Video Surveillance Systems Courses",
     "description": "Learn video surveillance systems from scratch! This course is for those who want a new profession or additional income. No fluff — only what is really needed for work. Learn to install, configure, and maintain modern video surveillance systems from scratch.",
     "programTitle": "Course program:",
@@ -455,6 +458,8 @@
     ]
   },
     "corporateBlock": {
+    "home": "Home",
+    "solution": "Solutions",
     "title": "Turnkey Comprehensive Solutions",
     "readMore": "Read More"
   },

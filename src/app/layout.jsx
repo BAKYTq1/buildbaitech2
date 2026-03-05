@@ -17,23 +17,30 @@ const geistMono = Geist_Mono({
 export const metadata = {
   metadataBase: new URL("https://baitech.kg"),
   title: {
-    default: "Baitech",
-    template: "%s | Baitech",
+    default: "Baitech.kg — Техника и электроника в Бишкеке",
+    template: "%s | Baitech.kg",
   },
   description:
-    "Baitech — разработка сайтов, веб-приложений и IT-решений в Бишкеке.",
-  keywords: ["разработка сайтов Бишкек", "создание сайта", "baitech"],
+    "Интернет-магазин техники в Бишкеке. Камеры видеонаблюдения, компьютеры, телефоны, сетевое оборудование, мониторы. Доставка по Кыргызстану.",
+  keywords: [
+    "интернет магазин техники Бишкек",
+    "купить технику Бишкек",
+    "электроника Кыргызстан",
+    "baitech",
+    "baitech.kg",
+  ],
   openGraph: {
-    title: "Baitech — IT решения",
-    description:
-      "Профессиональная разработка сайтов и веб-приложений.",
+    title: "Baitech.kg — Техника и электроника в Бишкеке",
+    description: "Камеры, компьютеры, телефоны, сеть, мониторы. Доставка по КР.",
     url: "https://baitech.kg",
     siteName: "Baitech",
-    locale: "ru_RU",
+    locale: "ru_KG",
     type: "website",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
   },
+  alternates: { canonical: "https://baitech.kg" },
+  robots: { index: true, follow: true },
 };
-
 export default function RootLayout({ children }) { 
   return (
     <html lang="ru" suppressHydrationWarning>

@@ -1,9 +1,10 @@
 "use client"
 import './style.scss';
-import logo from '../../../assets/svg/logo.svg';
+import logo from '../../../assets/svg/Байтех лого 2 1.svg';
+import finik from '../../../assets/png/finik.png';
 
-import { FiPhone, FiClock, FiMapPin } from 'react-icons/fi';
-import { FaWhatsapp, FaInstagram } from 'react-icons/fa';
+import { FiPhone, FiClock, FiMapPin, FiGlobe } from 'react-icons/fi';
+import { FaWhatsapp, FaInstagram, FaYoutube } from 'react-icons/fa';
 import { IoChevronDownSharp } from "react-icons/io5";
 import Image from 'next/image';
 import { useState } from 'react';
@@ -18,6 +19,7 @@ function Footer() {
   const [openSections, setOpenSections] = useState({
     info: false,
     client: false,
+    payment: false,
   });
 
   const toggleSection = (section) => {
@@ -62,7 +64,7 @@ function Footer() {
           </div>
 
           <div className="footer__socials">
-             <a            
+            <a            
               href={settings?.whatsapp ?? '#'}
               target="_blank"
               rel="noreferrer"
@@ -80,6 +82,16 @@ function Footer() {
             >
               <span className="footer__social-icon"><FaInstagram /></span>
               <span className="footer__social-text">Instagram</span>
+            </a>
+
+            <a
+              href="https://www.youtube.com/@baitech-1565"
+              target="_blank"
+              rel="noreferrer"
+              className="footer__social"
+            >
+              <span className="footer__social-icon"><FaYoutube /></span>
+              <span className="footer__social-text">YouTube</span>
             </a>
           </div>
         </div>
@@ -108,6 +120,7 @@ function Footer() {
         </div>
 
         {/* Клиенту */}
+        <div>
         <div className="footer__col footer__col--accordion">
           <button
             className="footer__accordion-header"
@@ -121,11 +134,27 @@ function Footer() {
           </button>
           <div className={`footer__accordion-content ${openSections.client ? 'footer__accordion-content--open' : ''}`}>
             <ul>
-              <li><Link href="/profile">{t('footer.client.account')}</Link></li>
+              <li><a href="/profile">{t('footer.client.account')}</a></li>
               <li><Link href="/orders">{t('footer.client.orderHistory')}</Link></li>
               <li><Link href="/return">{t('footer.client.returns')}</Link></li>
             </ul>
           </div>
+        </div>
+        <div className="footer__col footer__col--accordion">
+          <button
+            className="footer__accordion-header"
+            onClick={() => toggleSection('payment')}
+            type="button"
+          >
+            <h4 style={{marginTop:'20px'}}>{t('footer.client.title2')}</h4>
+            <IoChevronDownSharp
+              className={`footer__accordion-icon ${openSections.payment ? 'footer__accordion-icon--open' : ''}`}
+            />
+          </button>
+          <div className={`footer__accordion-content ${openSections.payment ? 'footer__accordion-content--open' : ''}`}>
+            <Image src={finik} alt="Finik" />
+          </div>
+        </div>
         </div>
 
         {/* Карта */}
@@ -147,7 +176,7 @@ function Footer() {
       </div>
 
       <div className="footer__bottom">
-        Baitech © 2025
+        Baitech © 2021
       </div>
     </footer>
   );

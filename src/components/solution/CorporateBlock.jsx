@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import Under from '../ui/under/Under';
 
 const CorporateBlock = () => {
     const { t, i18n } = useTranslation();
@@ -13,10 +14,10 @@ const CorporateBlock = () => {
   return (
     <section className="w-full bg-[#F5F7FA] py-0 pb-[30px]">
       <div className="container mx-auto px-4 xl:px-[0px] max-w-[1280px]">
+        <Under text={t('corporateBlock.home')} link={'/'} text1={t('corporateBlock.solution')} />
         <h2 className="text-[20px] font-medium md:text-[24px] font-bold text-[#00162A] mb-10">
                    {t('corporateBlock.title')}
         </h2>
-
         <div className="flex flex-col gap-12">
           {items.map((item) => {
             const imageUrl = item.existing_images?.[0]?.image || '';

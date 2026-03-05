@@ -37,7 +37,7 @@ const UsersTable = () => {
               <th>Ф.И.О</th>
               <th>Номер</th>
               <th>Электронная почта</th>
-              <th style={{ width: '50px' }}></th> {/* Колонка для удаления */}
+              <th style={{ width: '50px' }}></th> 
             </tr>
           </thead>
           <tbody>

@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
   images: {
-    unoptimized: true, // БУЛ СӨЗСҮЗ КЕРЕК: статикалык экспорт үчүн сүрөт оптималдаштырууну өчүрөт
+    unoptimized: true, 
     remotePatterns: [
       {
         protocol: 'https',

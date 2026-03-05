@@ -6,6 +6,7 @@ import { Smile, Layout, ShieldCheck, HeartPulse, GraduationCap } from 'lucide-re
 import img1 from '../../../assets/png/reklama.png';
 import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
+import Under from '../ui/under/Under';
 
 const CourseDetails = () => {
   const { t } = useTranslation();
@@ -21,6 +22,7 @@ const CourseDetails = () => {
   return (
     <div className="course-page">
       <div className="course-container">
+        <Under text={t('courseDetails.home')} link={'/'} text1={t('courseDetails.courses')} />
         <header className="course-header">
           <h1 className="course-title">{t('courseDetails.title')}</h1>
           <p className="course-description">{t('courseDetails.description')}</p>

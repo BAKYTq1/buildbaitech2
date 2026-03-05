@@ -4,11 +4,13 @@ import styles from './Navbar.module.scss';
 import { LayoutGrid, Monitor, Video, FileText, BookOpen } from 'lucide-react';
 import Catalog from '../catalogmenu/Catalog';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
 export default function NavItem() {
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
+  const pathname = usePathname();
 
   const menuItems = [
     { label: t('navbar.catalog'), icon: <LayoutGrid size={18} />, isCatalog: true },
@@ -25,15 +27,19 @@ export default function NavItem() {
           item.isCatalog ? (
             <button
               key={index}
-              className={styles.navItem}
-              onClick={() => setOpen(true)}
+              className={`${styles.navItem} ${open ? styles.navItemActive : ''}`}
+              onClick={() => setOpen((prev) => !prev)}
               type="button"
             >
               <span className={styles.label}>{item.label}</span>
               <span className={styles.icon}>{item.icon}</span>
             </button>
           ) : item.link ? (
-            <Link key={index} href={item.link} className={styles.navItem}>
+            <Link
+              key={index}
+              href={item.link}
+              className={`${styles.navItem} ${pathname === item.link ? styles.navItemActive : ''}`}
+            >
               <span className={styles.label}>{item.label}</span>
               <span className={styles.icon}>{item.icon}</span>
             </Link>

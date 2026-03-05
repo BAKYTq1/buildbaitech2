@@ -136,16 +136,17 @@
 }
 
 .header__contacts {
-   width: 135px;  
+   width: 113px;  
+   display: flex;
+    align-items: center;
+    justify-content: center;
   height: 44px;
-  padding: 0 12px;
   font-size: 13px;
   background: #F5F7FA;
   border: 1px solid #0E2E5B;
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 20px;
   border-radius: 8px;
   cursor: pointer;
   font-size: 15px;
@@ -439,7 +440,7 @@
   .language-button {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 0px;
     padding: 8px 12px;
     background: transparent;
     border: 1px solid #e5e7eb;
