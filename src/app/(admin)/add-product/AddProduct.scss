@@ -61,6 +61,7 @@
 
       .main-image-slot {
         flex: 1;
+
         @media (max-width: 600px) {
           height: 250px;
         }
@@ -96,7 +97,9 @@
           z-index: 5;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
-          &:hover { background: #c0392b; }
+          &:hover {
+            background: #c0392b;
+          }
         }
       }
 
@@ -143,7 +146,7 @@
         border-radius: 6px;
         background: #fff;
         font-size: 14px;
-        
+
         &:focus {
           outline: none;
           border-color: #1c2a3d;
@@ -155,7 +158,8 @@
       display: flex;
       gap: 10px;
 
-      .add-small-btn {
+      .add-small-btn,
+      .delete-small-btn {
         width: 44px;
         background: #1c2a3d;
         color: #fff;
@@ -165,7 +169,18 @@
         font-size: 20px;
         flex-shrink: 0;
         transition: opacity 0.2s;
-        &:hover { opacity: 0.9; }
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+
+      .delete-small-btn {
+        background: #e74c3c;
+        font-size: 16px;
       }
     }
 
@@ -177,7 +192,10 @@
 
       @media (max-width: 480px) {
         flex-direction: column;
-        button { width: 100%; }
+
+        button {
+          width: 100%;
+        }
       }
 
       .submit-btn {
@@ -188,7 +206,11 @@
         border-radius: 6px;
         cursor: pointer;
         font-weight: 600;
-        &:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
       }
 
       .cancel-btn {
@@ -228,17 +250,25 @@
       color: #1c2a3d;
       cursor: pointer;
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      
+
       &:hover {
         background: #1c2a3d;
         color: #fff;
         transform: translateX(-3px);
       }
     }
-    
+
     .header-titles {
-       h2 { font-size: 24px; margin: 0; }
-       p { font-size: 13px; color: #718096; margin-top: 4px; }
+      h2 {
+        font-size: 24px;
+        margin: 0;
+      }
+
+      p {
+        font-size: 13px;
+        color: #718096;
+        margin-top: 4px;
+      }
     }
   }
 }
@@ -257,70 +287,146 @@
 
   .modal-content {
     background: #fff;
-    padding: 30px;
-    border-radius: 12px;
+    padding: 40px;
+    border-radius: 20px;
     width: 100%;
-    max-width: 450px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    animation: modalAppear 0.3s ease-out;
+    max-width: 500px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    animation: modalAppear 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+
+    .close-modal-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #f1f5f9;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #64748b;
+      transition: all 0.2s;
+
+      &:hover {
+        background: #e2e8f0;
+        color: #0f172a;
+        transform: rotate(90deg);
+      }
+    }
 
     h3 {
       margin-top: 0;
-      margin-bottom: 24px;
-      font-size: 20px;
-      color: #1a202c;
+      margin-bottom: 30px;
+      font-size: 24px;
+      font-weight: 700;
+      color: #1e293b;
       text-align: center;
+      letter-spacing: -0.5px;
     }
 
     .modal-fields {
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 20px;
 
-      // Обертка для каждого поля
       .modal-group {
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: 8px;
 
         label {
           font-weight: 600;
           font-size: 14px;
-          color: #4a5568;
+          color: #475569;
+          margin-left: 4px;
         }
 
         input,
         textarea,
         select {
           width: 100%;
-          padding: 12px;
-          border: 1px solid #cbd5e0;
-          border-radius: 8px;
-          font-size: 14px;
-          background: #fff;
-          transition: border-color 0.2s, box-shadow 0.2s;
+          padding: 14px;
+          border: 2px solid #f1f5f9;
+          border-radius: 12px;
+          font-size: 15px;
+          background: #f8fafc;
+          transition: all 0.2s;
 
           &:focus {
             outline: none;
-            border-color: #1c2a3d;
-            box-shadow: 0 0 0 3px rgba(28, 42, 61, 0.1);
+            border-color: #3b82f6;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
           }
         }
 
-        // Специальный стиль для селекта в модалке (стрелочка)
         select {
           appearance: none;
-          background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a5568' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+          background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
           background-repeat: no-repeat;
-          background-position: right 12px center;
-          background-size: 16px;
-          padding-right: 40px;
-          cursor: pointer;
+          background-position: right 16px center;
+          background-size: 18px;
+          padding-right: 48px;
+        }
+      }
+    }
+
+    .management-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 350px;
+      overflow-y: auto;
+      padding-right: 8px;
+      margin-top: 10px;
+
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: #e2e8f0;
+        border-radius: 10px;
+      }
+
+      .management-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 20px;
+        background: #f8fafc;
+        border-radius: 14px;
+        border: 1px solid #f1f5f9;
+        transition: all 0.2s;
+
+        &:hover {
+          background: #f1f5f9;
+          transform: translateY(-1px);
         }
 
-        textarea {
-          min-height: 100px;
-          resize: vertical;
+        span {
+          font-weight: 600;
+          color: #334155;
+          font-size: 16px;
+        }
+
+        .delete-item-btn {
+          color: #94a3b8;
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 8px;
+          border-radius: 10px;
+          transition: all 0.2s;
+
+          &:hover {
+            background: #fee2e2;
+            color: #ef4444;
+          }
         }
       }
     }
@@ -328,39 +434,62 @@
     .modal-actions {
       display: flex;
       justify-content: flex-end;
-      gap: 12px;
-      margin-top: 30px;
+      gap: 16px;
+      margin-top: 40px;
 
       button {
-        padding: 12px 24px;
-        border-radius: 8px;
+        padding: 14px 28px;
+        border-radius: 12px;
         cursor: pointer;
         border: none;
-        font-weight: 600;
-        font-size: 14px;
-        transition: transform 0.1s, opacity 0.2s;
+        font-weight: 700;
+        font-size: 15px;
+        transition: all 0.2s;
 
-        &:active { transform: scale(0.98); }
-        &:disabled { opacity: 0.5; cursor: not-allowed; }
+        &:active {
+          transform: scale(0.96);
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
       }
 
       .cancel-btn {
-        background: #edf2f7;
-        color: #4a5568;
-        &:hover { background: #e2e8f0; }
+        background: #f1f5f9;
+        color: #64748b;
+
+        &:hover {
+          background: #e2e8f0;
+          color: #1e293b;
+        }
       }
 
       .confirm-btn {
-        background: #1c2a3d;
+        background: #3b82f6;
         color: #fff;
-        min-width: 120px;
-        &:hover { opacity: 0.9; }
+        min-width: 140px;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+
+        &:hover {
+          background: #2563eb;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(59, 130, 246, 0.35);
+        }
       }
     }
   }
 }
 
 @keyframes modalAppear {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }

@@ -16,7 +16,7 @@ export const useProductById = (id) => {
 };
 export const useProducts = () => {
     const queryClient = useQueryClient();
- 
+
     // Запрос на получение данных
     const productsQuery = useQuery({
         queryKey: ['products'],
@@ -71,6 +71,20 @@ export const useProducts = () => {
         },
     });
 
+    const deleteCategoryMutation = useMutation({
+        mutationFn: (id) => productApi.deleteCategory(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['categories'] });
+        },
+    });
+
+    const deleteBrandMutation = useMutation({
+        mutationFn: (id) => productApi.deleteBrand(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['brands'] });
+        },
+    });
+
     const categoriesQuery = useQuery({
         queryKey: ['categories'],
         queryFn: productApi.getCategories,
@@ -94,43 +108,45 @@ export const useProducts = () => {
         isInitialLoading: categoriesQuery.isLoading || brandsQuery.isLoading,
         addCategory: addCategoryMutation.mutateAsync,
         addBrand: addBrandMutation.mutateAsync,
+        deleteCategory: deleteCategoryMutation.mutateAsync,
+        deleteBrand: deleteBrandMutation.mutateAsync,
     };
 };
 export const useSimilarProducts = (productId) => {
-  return useQuery({
-    queryKey: ['similar-products', productId],
-    queryFn: () => productApi.getSimilar(productId),
-    enabled: !!productId,
-  });
+    return useQuery({
+        queryKey: ['similar-products', productId],
+        queryFn: () => productApi.getSimilar(productId),
+        enabled: !!productId,
+    });
 };
 
 // Infinite scroll для продуктов
 export const useInfiniteProducts = (filters = {}) => {
-  return useInfiniteQuery({
-    queryKey: ['products-infinite', filters],
-    queryFn: ({ pageParam = 1 }) => 
-      productApi.getAll({ ...filters, page: pageParam }),
-    getNextPageParam: (lastPage, pages) => {
-      return lastPage.next ? pages.length + 1 : undefined;
-    },
-    initialPageParam: 1,
-  });
+    return useInfiniteQuery({
+        queryKey: ['products-infinite', filters],
+        queryFn: ({ pageParam = 1 }) =>
+            productApi.getAll({ ...filters, page: pageParam }),
+        getNextPageParam: (lastPage, pages) => {
+            return lastPage.next ? pages.length + 1 : undefined;
+        },
+        initialPageParam: 1,
+    });
 };
 
 // Фильтрация по категории
 export const useProductsByCategory = (category, page = 1) => {
-  return useQuery({
-    queryKey: ['products', 'category', category, page],
-    queryFn: () => productApi.getByCategory(category, page),
-    enabled: !!category,
-  });
+    return useQuery({
+        queryKey: ['products', 'category', category, page],
+        queryFn: () => productApi.getByCategory(category, page),
+        enabled: !!category,
+    });
 };
 
 // Фильтрация по бренду
 export const useProductsByBrand = (brandId, page = 1) => {
-  return useQuery({
-    queryKey: ['products', 'brand', brandId, page],
-    queryFn: () => productApi.getByBrand(brandId, page),
-    enabled: !!brandId,
-  });
+    return useQuery({
+        queryKey: ['products', 'brand', brandId, page],
+        queryFn: () => productApi.getByBrand(brandId, page),
+        enabled: !!brandId,
+    });
 };

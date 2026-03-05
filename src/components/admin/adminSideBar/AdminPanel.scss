@@ -6,7 +6,7 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   border-right: 1px solid #e0e0e0;
   min-height: 100vh;
-  
+
   .admin-title {
     color: #00162A;
     font-size: 22px; // Увеличено
@@ -14,13 +14,13 @@
     margin-bottom: 30px;
     padding-left: 16px;
   }
-  
+
   .admin-menu {
     list-style: none;
     padding: 0;
     margin: 0;
     position: relative;
-    
+
     &::before {
       content: '';
       position: absolute;
@@ -34,11 +34,38 @@
       z-index: 1;
     }
   }
-  
+
+  .admin-logout-container {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
+
+    .admin-logout-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 16px;
+      background: none;
+      border: none;
+      border-radius: 8px;
+      color: #e53e3e;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 18px;
+      font-weight: 500;
+
+      &:hover {
+        background-color: #fff5f5;
+        transform: translateX(3px);
+      }
+    }
+  }
+
   .admin-menu-item {
     margin-bottom: 4px;
   }
-  
+
   .admin-menu-link {
     display: flex;
     align-items: center;
@@ -47,7 +74,7 @@
     padding: 12px 16px;
     border-radius: 8px;
     transition: all 0.2s ease;
-    
+
     .icon-text-container {
       display: flex;
       align-items: center;
@@ -69,20 +96,23 @@
 
     &:hover {
       background-color: #f7fafc;
-      .menu-text { color: #00162A; }
+
+      .menu-text {
+        color: #00162A;
+      }
     }
 
     &.active {
       background-color: #f0f7ff;
-      
+
       .menu-icon {
         color: #0E2E5B;
       }
-      
+
       .menu-text {
         color: #0E2E5B;
         font-weight: 600;
       }
     }
   }
-} 
+}

@@ -1,25 +1,28 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import Link from "next/link"; 
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 // Импортируем иконки
-import { 
-  Package, 
-  Truck, 
-  Image as ImageIcon, 
-  Users, 
-  Settings, 
-  BookOpen, 
-  FileText, 
-  Award, 
-  Info 
+import {
+  Package,
+  Truck,
+  Image as ImageIcon,
+  Users,
+  Settings,
+  BookOpen,
+  FileText,
+  Award,
+  Info,
+  LogOut
 } from "lucide-react";
+import { useLogout } from "@/lib/auth/hooks/hooks";
 import "./AdminPanel.scss";
 
 const AdminPanel = () => {
   const pathname = usePathname();
   const menuRef = useRef(null);
   const itemRefs = useRef({});
+  const { mutate: logout } = useLogout();
 
   const [indicatorPosition, setIndicatorPosition] = useState({ top: 0, height: 40 });
   const [activeIndex, setActiveIndex] = useState(0);
@@ -88,6 +91,12 @@ const AdminPanel = () => {
           ))}
         </ul>
       </nav>
+      <div className="admin-logout-container">
+        <button className="admin-logout-btn" onClick={() => logout()}>
+          <LogOut size={22} />
+          <span>Выйти</span>
+        </button>
+      </div>
     </div>
   );
 };

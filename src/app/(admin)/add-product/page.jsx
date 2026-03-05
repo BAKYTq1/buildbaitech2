@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useProducts } from "@/lib/products/hooks/hooks";
+import { Plus, Trash2, X, Camera } from "lucide-react";
 import "./AddProduct.scss";
 
 const AddProduct = () => {
@@ -13,6 +14,8 @@ const AddProduct = () => {
     addProduct,
     addCategory,
     addBrand,
+    deleteCategory,
+    deleteBrand,
   } = useProducts();
 
   // Состояние формы товара
@@ -60,14 +63,23 @@ const AddProduct = () => {
     setFormData((prev) => ({ ...prev, images: newImages }));
   };
 
+  // Функция для превращения иерархии категорий в плоский список с отступами
+  const flattenCategories = (items, depth = 0) => {
+    let flat = [];
+    items?.forEach((item) => {
+      flat.push({ ...item, displayName: "— ".repeat(depth) + item.name });
+      if (item.subcategories && item.subcategories.length > 0) {
+        flat = flat.concat(flattenCategories(item.subcategories, depth + 1));
+      }
+    });
+    return flat;
+  };
+
+  const flatCategories = flattenCategories(categories);
+
   // Сохранение нового бренда или категории из модалки
   const handleAddQuickInfo = async () => {
     if (!modalData.name.trim()) return alert("Название обязательно");
-    
-    // Если создаем категорию, проверяем, выбран ли parent (бренд)
-    if (modalType === "category" && !modalData.parent) {
-      return alert("Необходимо выбрать бренд (parent) для категории");
-    }
 
     setIsSubmittingModal(true);
     try {
@@ -75,7 +87,7 @@ const AddProduct = () => {
         await addCategory({
           name: modalData.name,
           description: modalData.description,
-          parent: Number(modalData.parent), // Отправляем ID выбранного бренда
+          parent: modalData.parent ? Number(modalData.parent) : null,
         });
       } else if (modalType === "brand") {
         await addBrand({
@@ -124,62 +136,105 @@ const AddProduct = () => {
       {modalType && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h3>Добавить {modalType === "category" ? "категорию" : "бренд"}</h3>
-            <div className="modal-fields">
-              
-              {/* Выбор родительского бренда ТОЛЬКО для категории */}
-              {modalType === "category" && (
-                <div className="modal-group">
-                  <label>Выберите бренд (Parent) *</label>
-                  <select
-                    value={modalData.parent}
-                    onChange={(e) => setModalData({ ...modalData, parent: e.target.value })}
-                  >
-                    <option value="">Выберите бренд...</option>
-                    {brands?.map((b) => (
-                      <option key={b.id} value={b.id}>
-                        {b.name}
-                      </option>
-                    ))}
-                  </select>
+            <button className="close-modal-btn" onClick={() => setModalType(null)}>
+              <X size={20} />
+            </button>
+            {modalType === "manage-category" || modalType === "manage-brand" ? (
+              <>
+                <h3>Управление {modalType === "manage-category" ? "категориями" : "брендами"}</h3>
+                <div className="management-list">
+                  {(modalType === "manage-category" ? flatCategories : brands)?.map((item) => (
+                    <div key={item.id} className="management-item">
+                      <span>{item.displayName || item.name}</span>
+                      <button
+                        className="delete-item-btn"
+                        onClick={async () => {
+                          if (window.confirm(`Вы уверены, что хотите удалить ${modalType === "manage-category" ? "категорию" : "бренд"} "${item.name}"?`)) {
+                            try {
+                              if (modalType === "manage-category") {
+                                await deleteCategory(item.id);
+                              } else {
+                                await deleteBrand(item.id);
+                              }
+                              setModalType(null);
+                              setModalData({ name: "", description: "", parent: "" });
+                            } catch (err) {
+                              console.error("Ошибка удаления", err);
+                            }
+                          }
+                        }}
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </div>
+                  ))}
                 </div>
-              )}
+                <div className="modal-actions">
+                  <button className="cancel-btn" onClick={() => setModalType(null)}>
+                    Закрыть
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <h3>Добавить {modalType === "category" ? "категорию" : "бренд"}</h3>
+                <div className="modal-fields">
 
-              <div className="modal-group">
-                <label>Название *</label>
-                <input
-                  type="text"
-                  value={modalData.name}
-                  onChange={(e) =>
-                    setModalData({ ...modalData, name: e.target.value })
-                  }
-                  placeholder="Введите название..."
-                />
-              </div>
+                  {/* Выбор родительской КАТЕГОРИИ ТОЛЬКО для категории */}
+                  {modalType === "category" && (
+                    <div className="modal-group">
+                      <label>Выберите родительскую категорию (Parent)</label>
+                      <select
+                        value={modalData.parent}
+                        onChange={(e) => setModalData({ ...modalData, parent: e.target.value })}
+                      >
+                        <option value="">Без родителя (Верхний уровень)</option>
+                        {flatCategories?.map((cat) => (
+                          <option key={cat.id} value={cat.id}>
+                            {cat.displayName}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
 
-              <div className="modal-group">
-                <label>Описание</label>
-                <textarea
-                  value={modalData.description}
-                  onChange={(e) =>
-                    setModalData({ ...modalData, description: e.target.value })
-                  }
-                  placeholder="Необязательное описание..."
-                />
-              </div>
-            </div>
-            <div className="modal-actions">
-              <button className="cancel-btn" onClick={() => setModalType(null)}>
-                Отмена
-              </button>
-              <button
-                className="confirm-btn"
-                onClick={handleAddQuickInfo}
-                disabled={isSubmittingModal}
-              >
-                {isSubmittingModal ? "..." : "Добавить"}
-              </button>
-            </div>
+                  <div className="modal-group">
+                    <label>Название *</label>
+                    <input
+                      type="text"
+                      value={modalData.name}
+                      onChange={(e) =>
+                        setModalData({ ...modalData, name: e.target.value })
+                      }
+                      placeholder="Введите название..."
+                    />
+                  </div>
+
+                  <div className="modal-group">
+                    <label>Описание</label>
+                    <textarea
+                      value={modalData.description}
+                      onChange={(e) =>
+                        setModalData({ ...modalData, description: e.target.value })
+                      }
+                      placeholder="Необязательное описание..."
+                    />
+                  </div>
+                </div>
+                <div className="modal-actions">
+                  <button className="cancel-btn" onClick={() => setModalType(null)}>
+                    Отмена
+                  </button>
+                  <button
+                    className="confirm-btn"
+                    onClick={handleAddQuickInfo}
+                    disabled={isSubmittingModal}
+                  >
+                    {isSubmittingModal ? "..." : "Добавить"}
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}
@@ -243,7 +298,7 @@ const AddProduct = () => {
                       htmlFor={`thumb-${idx}`}
                       className="upload-placeholder"
                     >
-                      📷
+                      <Camera size={24} />
                     </label>
                   </>
                 )}
@@ -276,7 +331,8 @@ const AddProduct = () => {
                   hidden
                 />
                 <label htmlFor="main-image" className="upload-placeholder-main">
-                  Загрузить главное фото
+                  <Camera size={32} />
+                  <span>Загрузить главное фото</span>
                 </label>
               </>
             )}
@@ -321,9 +377,9 @@ const AddProduct = () => {
                 onChange={handleInputChange}
               >
                 <option value="">Выберите категорию</option>
-                {categories?.map((cat) => (
+                {flatCategories?.map((cat) => (
                   <option key={cat.id} value={cat.id}>
-                    {cat.name}
+                    {cat.displayName}
                   </option>
                 ))}
               </select>
@@ -332,7 +388,14 @@ const AddProduct = () => {
                 className="add-small-btn"
                 onClick={() => setModalType("category")}
               >
-                +
+                <Plus size={20} />
+              </button>
+              <button
+                type="button"
+                className="delete-small-btn"
+                onClick={() => setModalType("manage-category")}
+              >
+                <Trash2 size={18} />
               </button>
             </div>
           </div>
@@ -356,7 +419,14 @@ const AddProduct = () => {
                 className="add-small-btn"
                 onClick={() => setModalType("brand")}
               >
-                +
+                <Plus size={20} />
+              </button>
+              <button
+                type="button"
+                className="delete-small-btn"
+                onClick={() => setModalType("manage-brand")}
+              >
+                <Trash2 size={18} />
               </button>
             </div>
           </div>
