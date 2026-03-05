@@ -38,12 +38,12 @@ const AddressModal = ({ address, onClose }) => {
     const validate = () => {
         const newErrors = {};
         const requiredFields = [
-            'first_name', 
-            'last_name', 
-            'email', 
-            'address_1', 
-            'postal_code', 
-            'country', 
+            'first_name',
+            'last_name',
+            'email',
+            'address_1',
+            'postal_code',
+            'country',
             'region'
         ];
 
@@ -64,7 +64,7 @@ const AddressModal = ({ address, onClose }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+
         if (validate()) {
             mutation.mutate(formData);
         }
@@ -154,12 +154,16 @@ const AddressModal = ({ address, onClose }) => {
                     </div>
 
                     <div className="flex flex-col gap-1 md:col-span-2">
-                        <input
-                            placeholder="Страна *"
+                        <select
                             className={getInputClass('country')}
                             value={formData.country}
                             onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                        />
+                        >
+                            <option value="">Выберите страну *</option>
+                            <option value="Кыргызстан">Кыргызстан</option>
+                            <option value="Узбекистан">Узбекистан</option>
+                            <option value="Казахстан">Казахстан</option>
+                        </select>
                         {errors.country && <span className="text-red-500 text-xs ml-1">{errors.country}</span>}
                     </div>
 
