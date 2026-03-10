@@ -3,13 +3,12 @@
 import Image from 'next/image';
 import styles from './Cart.module.scss';
 import { Trash2, Minus, Plus } from 'lucide-react';
-import { useCart, useDeleteCartItem, useUpdateCartItem } from '@/lib/cart/hooks/hooks';
+import { useDeleteCartItem, useUpdateCartItem } from '@/lib/cart/hooks/hooks';
 import { useTranslation } from 'react-i18next';
 
-export default function CartItem({ item }) {
+export default function CartItem({ item, checked, onToggle }) {
   const { t } = useTranslation();
   const product = item.product || {};
-  const {data: cartItems} = useCart();
   const { mutate: deleteItem } = useDeleteCartItem();
   const { mutate: updateItem, isPending } = useUpdateCartItem();
 
@@ -28,7 +27,6 @@ export default function CartItem({ item }) {
 
   return (
     <div className={styles.card}>
-      
       <div className={styles.imageBlock}>
         <span className={styles.badge}>
           {product.is_available ? t('cartItem.inStock') : t('cartItem.outOfStock')}
@@ -50,15 +48,15 @@ export default function CartItem({ item }) {
             <Trash2 size={18} />
           </button>
         </div>
-        
+
         <h4 className={styles.itemTitle}>{product.name}</h4>
         <p className={styles.description}>
           {product.description?.slice(0, 85)}
           {product.description?.length > 85 ? '...' : ''}
         </p>
-        
+
         <div className={styles.priceRow}>
-          <div className={styles.bonus}>{product.bonus || 0} {t('cartItem.bonuses')}</div>
+         <div className={styles.bonus}>{Number((product.bonus || 0) * item.quantity).toLocaleString()} {t('cartItem.bonuses')}</div>
           <div className={styles.price}>
             {Number(item.total_price || product.price || 0).toLocaleString()} {t('cartItem.currency')}
           </div>
@@ -74,9 +72,15 @@ export default function CartItem({ item }) {
               <Plus size={16} />
             </button>
           </div>
-          <input type="checkbox" className={styles.checkbox} defaultChecked />
+
+          <input
+            type="checkbox"
+            className={styles.checkbox}
+            checked={checked}
+            onChange={e => onToggle(e.target.checked)}
+          />
         </div>
       </div>
     </div>
   );
-}
+} 

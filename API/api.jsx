@@ -8,10 +8,11 @@ export const $api = axios.create({
 });
 
 $api.interceptors.request.use((config) => {
-  const userToken = typeof window !== "undefined" 
+if (!config.headers.Authorization) {
+  const userToken = typeof window !== "undefined"
     ? localStorage.getItem("access_token")
     : null;
-  const adminToken = typeof window !== "undefined" 
+  const adminToken = typeof window !== "undefined"
     ? localStorage.getItem("adminToken")
     : null;
 
@@ -19,10 +20,8 @@ $api.interceptors.request.use((config) => {
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
-  } else {
-    console.warn("Токен не найден в localStorage!");
   }
-
+} 
   if (typeof window !== "undefined") {
     const currentLanguage = localStorage.getItem("language") || "ru";
     config.headers["Accept-Language"] = currentLanguage;

@@ -200,9 +200,11 @@
       ]
     },
      "card": {
+      "whatsapp": "Написать в WhatsApp",
       "inStock": "В наличии",
       "outOfStock": "Нет в наличии",
       "article": "Артикул",
+      "checkAvailability": "Уточнить наличие",
       "bonuses": "бонусов",
       "currency": "сом",
       "addToCart": "Добавить в корзину"
@@ -419,7 +421,7 @@
       "history": "История транзакций"
     },
     "payment": "Оплата заказа",
-    "amount": "12 000 сом",
+    "currency": "сом",
     "status": {
       "success": "Успешно",
       "error": "Ошибка"
@@ -583,5 +585,44 @@
     "register": "Зарегистрироваться",
     "login": "Войти"
   }
-}
+},
+"checkoutModal": {
+      "close": "Закрыть",
+      "noAddress": {
+        "title": "Адрес доставки не указан",
+        "description": "Для завершения покупки, пожалуйста, укажите ваш адрес в личном кабинете или заполните данные на этой странице",
+        "addButton": "Добавить"
+      },
+      "form": {
+        "title": "Оформление заказа",
+        "firstName": "Имя, Отчество",
+        "firstNamePlaceholder": "Name",
+        "lastName": "Фамилия",
+        "lastNamePlaceholder": "Surname",
+        "phone": "Телефон",
+        "address": "Адрес",
+        "payment": "Оплата",
+        "cash": "Наличными",
+        "qrPayment": "Оплата по QR-коду",
+        "amount": "Сумма",
+        "currency": "сом",
+        "pcs": "шт",
+        "processing": "Оформляем...",
+        "submitButton": "Оформить заказ"
+      },
+      "success": {
+        "title": "Информация о заказе",
+        "deliveryAddress": "Адрес доставки",
+        "expectedDate": "Ожидаемая дата",
+        "totalAmount": "Общая сумма заказа",
+        "processingPayment": "Обработка...",
+        "payButton": "Оплатить"
+      },
+      "messages": {
+        "fillAllFields": "Заполните все поля",
+        "orderError": "Ошибка при оформлении заказа",
+        "paymentSuccess": "Заказ оплачен!",
+        "paymentError": "Ошибка при создании платежа"
+      }
+    }
 }

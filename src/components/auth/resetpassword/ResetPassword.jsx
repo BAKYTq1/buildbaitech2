@@ -21,7 +21,6 @@ export function ResetPasswordCodeContent() {
 
   useEffect(() => {
     const emailFromUrl = searchParams.get('email');
-    console.log('📧 Email из URL:', emailFromUrl);
     
     if (emailFromUrl) {
       setEmail(emailFromUrl);
@@ -29,12 +28,10 @@ export function ResetPasswordCodeContent() {
       toast.error(t('resetPasswordCode.messages.emailNotFound'));
       setTimeout(() => router.push('/forgot-password'), 2000);
     }
-  }, [searchParams, router, t]);
+  }, [searchParams, router, t]);  
 
   const handleChange = (index, value) => {
-    if (value !== '' && !/^\d$/.test(value)) {
-      return;
-    }
+    if (value !== '' && !/^\d$/.test(value)) return;
 
     const newCode = [...code];
     
@@ -46,7 +43,6 @@ export function ResetPasswordCodeContent() {
         }
       });
       setCode(newCode);
-      
       const nextEmptyIndex = newCode.findIndex(d => d === '');
       const focusIndex = nextEmptyIndex === -1 ? 3 : nextEmptyIndex;
       setTimeout(() => inputRefs.current[focusIndex]?.focus(), 0);
@@ -55,7 +51,6 @@ export function ResetPasswordCodeContent() {
 
     newCode[index] = value;
     setCode(newCode);
-
     if (value !== '' && index < 3) {
       setTimeout(() => inputRefs.current[index + 1]?.focus(), 0);
     }
@@ -65,7 +60,6 @@ export function ResetPasswordCodeContent() {
     if (e.key === 'Backspace') {
       e.preventDefault();
       const newCode = [...code];
-      
       if (code[index] !== '') {
         newCode[index] = '';
         setCode(newCode);
@@ -76,7 +70,6 @@ export function ResetPasswordCodeContent() {
       }
       return;
     }
-
     if (e.key === 'Delete') {
       e.preventDefault();
       const newCode = [...code];
@@ -84,29 +77,17 @@ export function ResetPasswordCodeContent() {
       setCode(newCode);
       return;
     }
-
-    if (e.key === 'ArrowLeft' && index > 0) {
-      e.preventDefault();
-      inputRefs.current[index - 1]?.focus();
-    }
-    if (e.key === 'ArrowRight' && index < 3) {
-      e.preventDefault();
-      inputRefs.current[index + 1]?.focus();
-    }
-
-    if (e.key === 'Enter' && code.join('').length === 4) {
-      handleSubmit(e);
-    }
+    if (e.key === 'ArrowLeft' && index > 0) { e.preventDefault(); inputRefs.current[index - 1]?.focus(); }
+    if (e.key === 'ArrowRight' && index < 3) { e.preventDefault(); inputRefs.current[index + 1]?.focus(); }
+    if (e.key === 'Enter' && code.join('').length === 4) handleSubmit(e);
   };
 
   const handlePaste = (e) => {
     e.preventDefault();
     const pastedData = e.clipboardData.getData('text').trim();
     const digits = pastedData.replace(/\D/g, '').slice(0, 4);
-    
     if (digits.length === 4) {
-      const pastedCode = digits.split('');
-      setCode(pastedCode);
+      setCode(digits.split(''));
       setTimeout(() => inputRefs.current[3]?.focus(), 0);
     } else {
       toast.error(t('resetPasswordCode.messages.paste4Digits'));
@@ -121,24 +102,25 @@ export function ResetPasswordCodeContent() {
       toast.error(t('resetPasswordCode.messages.enter4Digits'));
       return;
     }
-
     if (!email) {
       toast.error(t('resetPasswordCode.messages.emailNotFound'));
       return;
     }
 
     try {
-      console.log('📤 Проверка кода:', { email, code: fullCode });
-      await verifyCodeMutation.mutateAsync({
-        email,
-        otp: fullCode
-      });
-      
-      // После успешной проверки кода переходим на страницу создания нового пароля
-      router.push(`/reset-password-new?email=${encodeURIComponent(email)}&code=${fullCode}`);
+      const result = await verifyCodeMutation.mutateAsync({ email, otp: fullCode });
+
+      // Сохраняем токены из ответа
+      if (result?.access) {
+        localStorage.setItem('reset_access_token', result.access);
+      }
+      if (result?.refresh) {
+        localStorage.setItem('reset_refresh_token', result.refresh);
+      }
+
+      // Переходим на страницу нового пароля — токен уже в localStorage
+      router.push('/reset-password-new');
     } catch (error) {
-      console.error('Code verification error:', error);
-      
       const errorMessage = 
         error?.response?.data?.message || 
         error?.response?.data?.detail ||
@@ -146,7 +128,6 @@ export function ResetPasswordCodeContent() {
         t('resetPasswordCode.messages.invalidCode');
       
       toast.error(errorMessage);
-      
       setCode(['', '', '', '']);
       setTimeout(() => inputRefs.current[0]?.focus(), 0);
     }
@@ -228,7 +209,6 @@ export function ResetPasswordCodeContent() {
 
 export default function ResetPasswordCode() {
   const { t } = useTranslation();
-  
   return (
     <Suspense fallback={<div>{t('resetPasswordCode.loading')}</div>}>
       <ResetPasswordCodeContent />
