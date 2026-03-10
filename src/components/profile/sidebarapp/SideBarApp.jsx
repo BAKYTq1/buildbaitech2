@@ -9,7 +9,7 @@ import TransactionHistory from '../transitionhistory/TransitionHistory';
 import { Returns } from '../return/Returns';
 import AddressBook from '../adressbook/AdressBook';
 import { useMyProfile, usePatchProfile } from '@/lib/auth/hooks/hooks';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
@@ -22,7 +22,8 @@ export default function SidebarApp() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const router = useRouter();
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient(); 
+  const searchParams = useSearchParams();
 
   // Проверка авторизации при загрузке
   useEffect(() => {
@@ -119,7 +120,10 @@ export default function SidebarApp() {
   const handleGoToLogin = () => {
     router.push('/login');
   };
-
+useEffect(() => {
+  const tab = searchParams.get('tab');
+  if (tab) setActivePage(tab);
+}, [searchParams]);
   const menuItems = [
     { id: 'profile', label: t('profile.menu.myInfo'), icon: User },
     { id: 'password', label: t('profile.menu.changePassword'), icon: Key },

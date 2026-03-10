@@ -71,14 +71,14 @@ verifyRegistration: async (email, otp) => {
   },
 
   // Завершение сброса пароля
-  passwordResetComplete: async (email, otp, new_password) => {
-    const { data } = await $api.post('/api/password-reset/complete/', {
-      email,
-      otp,
-      new_password
-    });
-    return data;
-  },
+passwordResetComplete: async (new_password, confirm_password) => {
+  const token = localStorage.getItem('reset_access_token');
+  const { data } = await $api.post('/api/password-reset/complete/', 
+    { new_password, confirm_password },
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return data;
+},
     // ========== ПРОФИЛЬ ==========
 
   // Получить все профили (админ)

@@ -175,8 +175,11 @@ function Footer() {
 
       </div>
 
-      <div className="footer__bottom">
+      <div className="footer__bottom flex justify-center items-center">
+        <h3>
         Baitech © 2021
+        </h3>
+        <h3>Разработано</h3>
       </div>
     </footer>
   );

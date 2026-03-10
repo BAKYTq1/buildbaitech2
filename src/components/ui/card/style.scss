@@ -215,3 +215,25 @@
     }
   }
 }
+.product-card__whatsapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px;
+  margin-top: 8px;
+  background: #25D366;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity 0.2s;
+
+  &:hover { opacity: 0.85; }
+}
+.product-card__availability-btn{
+  text-align: center;
+  color: red;
+}

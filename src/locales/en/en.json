@@ -200,8 +200,10 @@
       ]
     },
      "card": {
+       "whatsapp": "Contact via WhatsApp",
       "inStock": "In Stock",
       "outOfStock": "Out of Stock",
+      "checkAvailability": "Check Availability",
       "article": "Article",
       "bonuses": "bonuses",
       "currency": "som",
@@ -419,7 +421,7 @@
       "history": "Transaction History"
     },
     "payment": "Order Payment",
-    "amount": "12,000 KGS",
+    "currency": "KGS",
     "status": {
       "success": "Successful",
       "error": "Error"
@@ -575,5 +577,44 @@
       "article": "Article",
       "bonuses": "bonuses",
       "currency": "som"
+    },
+    "checkoutModal": {
+      "close": "Close",
+      "noAddress": {
+        "title": "Delivery address not specified",
+        "description": "To complete your purchase, please specify your address in your personal account or fill in the details on this page",
+        "addButton": "Add"
+      },
+      "form": {
+        "title": "Checkout",
+        "firstName": "First Name, Middle Name",
+        "firstNamePlaceholder": "Name",
+        "lastName": "Last Name",
+        "lastNamePlaceholder": "Surname",
+        "phone": "Phone",
+        "address": "Address",
+        "payment": "Payment",
+        "cash": "Cash",
+        "qrPayment": "QR Code Payment",
+        "amount": "Amount",
+        "currency": "som",
+        "pcs": "pcs",
+        "processing": "Processing...",
+        "submitButton": "Place Order"
+      },
+      "success": {
+        "title": "Order Information",
+        "deliveryAddress": "Delivery Address",
+        "expectedDate": "Expected Date",
+        "totalAmount": "Total Order Amount",
+        "processingPayment": "Processing...",
+        "payButton": "Pay"
+      },
+      "messages": {
+        "fillAllFields": "Fill in all fields",
+        "orderError": "Error placing order",
+        "paymentSuccess": "Order paid!",
+        "paymentError": "Error creating payment"
+      }
     }
 }

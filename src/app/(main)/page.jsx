@@ -7,9 +7,11 @@ import { News } from "@/components/News/News";
 import '../globals.css'
 import CorporateBlock from "@/components/solution/CorporateBlock";
 import CatalogButton from "@/components/catalogbutton/CatalogButton";
+import FloatingButton from "@/components/handlClick/HandleClick";
 export default function Home() {
   return (
     <div className="">
+      <FloatingButton/>
       <Banner/>
       <Features/>
       <CatalogButton/>

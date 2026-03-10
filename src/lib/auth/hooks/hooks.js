@@ -162,7 +162,7 @@ export const useLogout = () => {
 export const usePasswordResetRequest = () => {
   return useMutation({
     mutationKey: ['password-reset-request'],
-    mutationFn: (email) => authService.passwordResetRequest(email),
+    mutationFn: ({ email }) => authService.passwordResetRequest(email),
     onSuccess: () => {
       toast.success('Код для сброса пароля отправлен на ваш email');
     },
@@ -199,8 +199,8 @@ export const usePasswordResetComplete = () => {
   
   return useMutation({
     mutationKey: ['password-reset-complete'],
-    mutationFn: ({ email, otp, new_password }) => 
-      authService.passwordResetComplete(email, otp, new_password),
+    mutationFn: ({ new_password, confirm_password}) => 
+      authService.passwordResetComplete(new_password, confirm_password),
     onSuccess: () => {
       toast.success('Пароль успешно изменен!');
       router.push('/login');

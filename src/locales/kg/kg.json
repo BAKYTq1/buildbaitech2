@@ -200,6 +200,8 @@
       ]
     },
      "card": {
+       "whatsapp": "WhatsApp аркылуу байланыш",
+      "checkAvailability": "Билүү үчүн байланыш",
       "inStock": "Бар",
       "outOfStock": "Жок",
       "article": "Артикул",
@@ -419,7 +421,7 @@
       "history": "Транзакциялар тарыхы"
     },
     "payment": "Буйрутманын төлөмү",
-    "amount": "12 000 сом",
+    "currency": "сом",
     "status": {
       "success": "Ийгиликтүү",
       "error": "Ката"
@@ -575,5 +577,44 @@
       "article": "Артикул",
       "bonuses": "бонустар",
       "currency": "сом"
+    },
+    "checkoutModal": {
+      "close": "Жабуу",
+      "noAddress": {
+        "title": "Жеткирүү дареги көрсөтүлгөн жок",
+        "description": "Сатып алууну аяктоо үчүн, жеке кабинетиңизде дарегиңизди көрсөтүңүз же бул бетте маалыматтарды толтуруңуз",
+        "addButton": "Кошуу"
+      },
+      "form": {
+        "title": "Буйрутма берүү",
+        "firstName": "Аты, Атасынын аты",
+        "firstNamePlaceholder": "Аты",
+        "lastName": "Фамилиясы",
+        "lastNamePlaceholder": "Фамилия",
+        "phone": "Телефон",
+        "address": "Дарек",
+        "payment": "Төлөм",
+        "cash": "Накталай",
+        "qrPayment": "QR-код аркылуу төлөм",
+        "amount": "Сумма",
+        "currency": "сом",
+        "pcs": "даана",
+        "processing": "Иштетилүүдө...",
+        "submitButton": "Буйрутма берүү"
+      },
+      "success": {
+        "title": "Буйрутма жөнүндө маалымат",
+        "deliveryAddress": "Жеткирүү дареги",
+        "expectedDate": "Күтүлүүчү дата",
+        "totalAmount": "Буйрутманын жалпы суммасы",
+        "processingPayment": "Иштетилүүдө...",
+        "payButton": "Төлөө"
+      },
+      "messages": {
+        "fillAllFields": "Бардык талааларды толтуруңуз",
+        "orderError": "Буйрутма берүүдө ката",
+        "paymentSuccess": "Буйрутма төлөндү!",
+        "paymentError": "Төлөм түзүүдө ката"
+      }
     }
 }
